@@ -103,7 +103,16 @@ class Battle extends React.Component {
           </View>
           <View style={{width: 350, height: 350, backgroundColor: '#323739', marginTop: 25, borderRadius: 5}}>
             <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15, lineHeight: 25}}>
-            {this.state.story}
+              <Image source={(require('../Images/IndividualSprites/slime1.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime2.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime3.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime4.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime5.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime6.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime7.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime8.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime9.png'))}></Image>
+              <Image source={(require('../Images/IndividualSprites/slime10.png'))}></Image>
             </Text>
           </View>
           <View style={{width: 350, height: 50, backgroundColor: '#323739', marginTop: 25, borderRadius: 5}}>

@@ -19,7 +19,6 @@ import {
   TouchableOpacity,
   Image,
   BackHandler,
-  NativeModules,
 } from 'react-native';
 
 import {
@@ -35,12 +34,8 @@ import Battle from './Battle';
 import ChapterTwo from './ChapterTwo';
 import axios from 'axios';
 
-const { UIManager } = NativeModules;
 
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-
-
-class StoryLine extends React.Component {
+class Story extends React.Component {
   constructor(props){
     super(props);
 
@@ -55,8 +50,7 @@ class StoryLine extends React.Component {
         choiceOneText: props.choiceOneText,
         choiceTwoText: props.choiceTwoText,
         light: props.light,
-        battle: props.battle,
-        transitionCount: 0,
+        battle: props.battle
       }
     } else {
       this.state = {
@@ -70,7 +64,6 @@ class StoryLine extends React.Component {
         choiceTwoText: '',
         light: 0,
         battle: false,
-        transitionCount: 0,
       }
     }
 
@@ -93,7 +86,6 @@ class StoryLine extends React.Component {
           choiceTwoText: response.data[0].choicetwotext,
           light: response.data[0].light,
           battle: response.data[0].battle,
-          nextChapter: false,
         })
       })
       .catch((error) => {
@@ -104,7 +96,7 @@ class StoryLine extends React.Component {
 
   optionOneChoice() {
     axios.get(`http://10.3.33.224:3005/storyLine/${this.state.choiceOne}`)
-    .then((response) => {
+      .then((response) => {
         this.setState(prevState => ({
           currentStoryLine: response.data[0].id,
           actions: response.data[0].actions,
@@ -121,15 +113,6 @@ class StoryLine extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-
-      if(this.state.transitionCount === 4){
-        this.setState({
-          nextChapter: true,
-        })
-      }
-      this.setState(prevState => ({
-        transitionCount: prevState.transitionCount + 1,
-      }))
   }
 
   optionTwoChoice() {
@@ -151,60 +134,47 @@ class StoryLine extends React.Component {
     .catch((error) => {
       console.log(error);
     });
-
-    if(this.state.transitionCount === 4){
-      this.setState({
-        nextChapter: true,
-      })
-    }
-    this.setState(prevState => ({
-      transitionCount: prevState.transitionCount + 1,
-    }))
   }
 
   render() {
   return (
-    this.state.nextChapter ? (
-      <ChapterTwo props={this.state}/>
-    ) : (
-      !this.state.battle ? (
-        <SafeAreaView style={{backgroundColor: '#071C2A', height: '100%'}}>
-          <Image style={{width: 60, height: 60, resizeMode: 'contain', marginLeft: 10}} source={(require('../Images/ButterFly_.png'))}></Image>
-          <View style={styles.outerView}>
-            <View style={{width: 350, height: 50, backgroundColor: '#323739', borderRadius: 5}}>
-              <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15}}>{this.state.actions}</Text>
+    !this.state.battle ? (
+      <SafeAreaView style={{backgroundColor: '#071C2A', height: '100%'}}>
+        <Image style={{width: 60, height: 60, resizeMode: 'contain', marginLeft: 10}} source={(require('../Images/ButterFly_.png'))}></Image>
+        <View style={styles.outerView}>
+          <View style={{width: 350, height: 50, backgroundColor: '#323739', borderRadius: 5}}>
+            <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15}}>{this.state.actions}</Text>
+          </View>
+          <View style={{width: 350, height: 350, backgroundColor: '#323739', marginTop: 25, borderRadius: 5}}>
+            <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15, lineHeight: 25}}>
+            {this.state.story}
+            </Text>
+          </View>
+          <View style={{width: 350, height: 50, backgroundColor: '#323739', marginTop: 25, borderRadius: 5}}>
+            <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15}}>{this.state.thoughts}</Text>
+          </View>
+          <View style={styles.bottomButtonContainer}>
+            <View style={styles.leftButton}>
+            <TouchableOpacity
+                style={styles.buttonOne}
+                onPress={this.optionOneChoice}
+                  >
+              <Text style={{fontFamily: 'Ubuntu', fontSize: 24, color: 'white', textAlign: 'center'}}>{this.state.choiceOneText}</Text>
+            </TouchableOpacity>
             </View>
-            <View style={{width: 350, height: 350, backgroundColor: '#323739', marginTop: 25, borderRadius: 5}}>
-              <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15, lineHeight: 25}}>
-              {this.state.story}
-              </Text>
-            </View>
-            <View style={{width: 350, height: 50, backgroundColor: '#323739', marginTop: 25, borderRadius: 5}}>
-              <Text style={{color: '#A9EAFF', fontFamily: 'Montserrat', fontSize: 15, textAlign: 'center', marginTop: 15}}>{this.state.thoughts}</Text>
-            </View>
-            <View style={styles.bottomButtonContainer}>
-              <View style={styles.leftButton}>
-              <TouchableOpacity
-                  style={styles.buttonOne}
-                  onPress={this.optionOneChoice}
-                    >
-                <Text style={{fontFamily: 'Ubuntu', fontSize: 24, color: 'white', textAlign: 'center'}}>{this.state.choiceOneText}</Text>
-              </TouchableOpacity>
-              </View>
-              <View style={styles.rightButton}>
-              <TouchableOpacity
-                  style={styles.buttonTwo}
-                  onPress={this.optionTwoChoice}
-                    >
-                <Text style={{fontFamily: 'Ubuntu', fontSize: 24, color: 'white', textAlign: 'center'}}>{this.state.choiceTwoText}</Text>
-              </TouchableOpacity>
-              </View>
+            <View style={styles.rightButton}>
+            <TouchableOpacity
+                style={styles.buttonTwo}
+                onPress={this.optionTwoChoice}
+                  >
+              <Text style={{fontFamily: 'Ubuntu', fontSize: 24, color: 'white', textAlign: 'center'}}>{this.state.choiceTwoText}</Text>
+            </TouchableOpacity>
             </View>
           </View>
-        </SafeAreaView>
-      ) : (
-        <Battle props={this.state}/>
-      )
+        </View>
+      </SafeAreaView>
+    ) : (
+      <Battle props={this.state}/>
     )
   );
   }
@@ -294,4 +264,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default StoryLine;
+export default Story;

@@ -29,51 +29,37 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import axios from 'axios';
-import StoryLine from './Modules/StoryLine';
+import StoryLine from './StoryLine';
 
 
-class App extends React.Component {
+class ChapterTwo extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
-      getStarted: false,
-      hamburgerActive: false,
+      getStarted: false
     }
 
-    this.startGame = this.startGame.bind(this);
-  }
-
-  startGame() {
-    this.setState({
-      getStarted: true
-    })
   }
 
   render() {
   return (
     !this.state.getStarted ? (
       <SafeAreaView style={{backgroundColor: '#071C2A', height: '100%', margin: 0}}>
-        <Image style={{width: 190, height: 190, resizeMode: 'contain', left: '45%'}} source={require('./Images/ButterFly_.png')}></Image>
+        <Image style={{width: 190, height: 190, resizeMode: 'contain', left: '45%'}} source={require('../Images/ButterFly_.png')}></Image>
         <View>
           <Text style={styles.title}>CODING IN ANOTHER WORLD</Text>
         </View>
+          <Text style={styles.chapterTwo}>CHAPTER TWO</Text>
         <View style={styles.buttonOne}>
           <Button
             color='rgba(169, 234, 255, 0.78)'
-            onPress={this.startGame}
-            title='GET STARTED!'
+            onPress={() => alert('Coming soon!')}
+            title='Continue'
           />
         </View>
-        <View style={styles.buttonTwo}>
-          <Button
-            color='#071C2A'
-            onPress={() => alert("Coming soon!")}
-            title='CHAPTERS'
-          />
-        </View>
-        <Image style={{position: 'absolute', bottom: 0}} source={require('./Images/Rectangle1.png')}></Image>
-        <Image source={require('./Images/Rectangle2.png')}></Image>
+        <Image style={{position: 'absolute', bottom: 0}} source={require('../Images/Rectangle1.png')}></Image>
+        <Image style={{position: 'absolute', bottom: 5}} source={require('../Images/Rectangle2.png')}></Image>
       </SafeAreaView>
     ) : (
       <StoryLine />
@@ -85,12 +71,24 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   title: {
     fontFamily: 'Montserrat-Bold',
-    fontStyle: 'normal',
+    // fontStyle: 'normal',
     fontWeight: '900',
     fontSize: 30,
     lineHeight: 29,
     textAlign: 'center',
     color: '#A9EAFF',
+  },
+  chapterTwo: {
+    fontFamily: 'Montserrat-Bold',
+    fontStyle: 'normal',
+    fontWeight: '700',
+    fontSize: 20,
+    lineHeight: 27,
+    textAlign: 'center',
+    color: '#6ADBFF',
+    marginTop: 30,
+    marginRight: 50,
+    textAlign: 'right',
   },
   buttonOne: {
     position: 'absolute',
@@ -107,13 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
     zIndex: 4,
-  },
-  setting: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    color: 'white',
   }
 });
 
-export default App;
+export default ChapterTwo;

@@ -17,7 +17,7 @@
     "nodemon": "^1.19.1",
     "pg": "^7.12.1",
     "react": "16.8.6",
-    "react-native": "0.60.4"
+    "react-native": "0.62.3"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
